@@ -17,13 +17,15 @@ models:
       - name: created_at
         description: "When the order was created"
         tests:
-          - not_null
+          - not_null:
+              name: "Field created_at is NOT NULL"
 
       - name: returned_at
         description: "When the order was returned"
         tests:
           - not_null:
               where: "status = 'Returned'"
+
           - dbt_utils.expression_is_true:
               expression: ">= delivered_at"
               where: "delivered_at IS NOT NULL AND returned_at IS NOT NULL"
